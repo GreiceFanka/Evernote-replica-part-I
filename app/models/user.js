@@ -12,16 +12,30 @@ let userSchema = new mongoose.Schema({
 
   userSchema.pre('save', function(next){
       if(this.isNew || this.isModified('password')){
-          bcrypt.hash(this.password,10,
-           (err, hashedPassword) =>{
+          bcrypt.hash(this.password, 10,
+           (err, hashedPassword) => {
               if(err)
               next(err)
-              else{
+              else {
                   this.password = hashedPassword;
                   next();
               } 
            }
         )
+      } else {
+          next();
       }
   });
-  module.exports = mongoose.model('User', userSchema);​
+
+//Verificando se a password está correta
+  userSchema.methods.isCorrectPassword = function (password, callback){
+    bcrypt.compare(password, this.password, function(err, same){
+        if(err){
+        callback(err);
+    } else {
+        callback(err, same);
+        }
+    })
+  }
+
+ module.exports = mongoose.model('User', userSchema);

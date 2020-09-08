@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 //Criando estrutura do objeto no DB//
-let noteSchema = new mongoose.Schema({
+const noteSchema = new mongoose.Schema({
     title: String,
     body: String,
     created_at: { type: Date, default: Date.now },
