@@ -28,13 +28,12 @@ let userSchema = new mongoose.Schema({
   });
 
 //Verificando se a password está correta
-  userSchema.methods.isCorrectPassword = function (password, callback){
+  userSchema.methods.isCorrectPassword = function(password, callback){
     bcrypt.compare(password, this.password, function(err, same){
-        if(err){
+        if(err)
         callback(err);
-    } else {
+       else 
         callback(err, same);
-        }
     })
   }
 
